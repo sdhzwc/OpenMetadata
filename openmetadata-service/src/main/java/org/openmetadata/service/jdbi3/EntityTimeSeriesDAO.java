@@ -140,12 +140,19 @@ public interface EntityTimeSeriesDAO {
       @Bind("endTs") Long endTs);
 
   @SqlQuery(
-      "SELECT json FROM "
-          + "(SELECT id, json, ROW_NUMBER() OVER(PARTITION BY <partition> ORDER BY timestamp DESC) AS row_num "
-          + "FROM <table> <cond> "
-          + "AND timestamp BETWEEN :startTs AND :endTs "
-          + "ORDER BY timestamp DESC) ranked "
-          + "WHERE ranked.row_num = 1 LIMIT :limit OFFSET :offset")
+      "SELECT json <table> "
+          + "WHERE id in ("
+                            + "SELECT MAX(id) "
+                            + "FROM <table> as a"
+                            + "INNER JOIN ( "
+                                            + "SELECT  <partition>, max(timestamp) as timestamp_1 "
+                                            + "FROM <table> <cond> "
+                                            + "AND timestamp BETWEEN :startTs AND :endTs "
+                                            + "GROUP BY <partition> "
+                            + " ) as b on a.<partition> = b.<partition> and a.timestamp = b.timestamp_1 "
+                            + " GROUP BY a.<partition> "
+                       + ") "
+          + "LIMIT :limit OFFSET :offset")
   List<String> listWithOffset(
       @Define("table") String table,
       @Define("cond") String cond,
@@ -235,10 +242,8 @@ public interface EntityTimeSeriesDAO {
       @Bind("endTs") Long endTs);
 
   @SqlQuery(
-      "SELECT count(*) FROM "
-          + "(SELECT id, ROW_NUMBER() OVER(PARTITION BY <partition> ORDER BY timestamp DESC) AS row_num FROM "
-          + "<table> <cond> AND timestamp BETWEEN :startTs AND :endTs) ranked "
-          + "WHERE ranked.row_num = 1")
+      "SELECT count(distinct <partition>) FROM "
+          + "<table> <cond> AND timestamp BETWEEN :startTs AND :endTs ")
   int listCount(
       @Define("table") String table,
       @Define("partition") String partition,

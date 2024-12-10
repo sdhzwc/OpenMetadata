@@ -4424,12 +4424,19 @@ public interface CollectionDAO {
     void delete(@BindFQN("entityFQNHash") String entityFQNHash);
 
     @SqlQuery(
-        "SELECT json FROM "
-            + "(SELECT id, json, testCaseResolutionStatusType, assignee, ROW_NUMBER() OVER(PARTITION BY <partition> ORDER BY timestamp DESC) AS row_num "
-            + "FROM <table> <cond> "
-            + "AND timestamp BETWEEN :startTs AND :endTs "
-            + "ORDER BY timestamp DESC) ranked "
-            + "<outerCond> AND ranked.row_num = 1 LIMIT :limit OFFSET :offset")
+            "SELECT json FROM <table> "
+                  + "WHERE id in ("
+                                + "SELECT MAX(id) "
+                                + "FROM <table> as a "
+                                + "INNER JOIN ( "
+                                              + "SELECT  <partition>, max(timestamp) as timestamp_1 "
+                                              + "FROM <table> <cond> "
+                                              + "AND timestamp BETWEEN :startTs AND :endTs "
+                                              + "GROUP BY <partition> "
+                                + " ) as b on a.<partition> = b.<partition> and a.timestamp = b.timestamp_1 "
+                                + " GROUP BY a.<partition> "
+                              + ") "
+             + "LIMIT :limit OFFSET :offset")
     List<String> listWithOffset(
         @Define("table") String table,
         @BindMap Map<String, ?> params,
@@ -5093,10 +5100,10 @@ public interface CollectionDAO {
 
     @ConnectionAwareSqlUpdate(
         value =
-            "DELETE FROM suggestions suggestions WHERE JSON_EXTRACT(json, '$.createdBy.id') = :createdBy",
+            "DELETE FROM suggestions  WHERE JSON_EXTRACT(json, '$.createdBy.id') = :createdBy",
         connectionType = MYSQL)
     @ConnectionAwareSqlUpdate(
-        value = "DELETE FROM suggestions suggestions WHERE json #>> '{createdBy,id}' = :createdBy",
+        value = "DELETE FROM suggestions  WHERE json #>> '{createdBy,id}' = :createdBy",
         connectionType = POSTGRES)
     void deleteByCreatedBy(@BindUUID("createdBy") UUID id);
 
