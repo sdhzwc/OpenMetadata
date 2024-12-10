@@ -3174,7 +3174,7 @@ public interface CollectionDAO {
           // All the teams without parents should come under "organization" team
           condition =
               String.format(
-                  "%s AND id NOT IN ( (SELECT '%s') UNION (SELECT toId FROM entity_relationship WHERE fromId!='%s' AND fromEntity='team' AND toEntity='team' AND relation=%d) )",
+                  "%s AND id NOT IN ( SELECT '%s' UNION SELECT toId FROM entity_relationship WHERE fromId!='%s' AND fromEntity='team' AND toEntity='team' AND relation=%d )",
                   condition, team.getId(), team.getId(), Relationship.PARENT_OF.ordinal());
         } else {
           condition =
@@ -3215,7 +3215,7 @@ public interface CollectionDAO {
           // All the parentless teams should come under "organization" team
           condition =
               String.format(
-                  "%s AND id NOT IN ( (SELECT '%s') UNION (SELECT toId FROM entity_relationship WHERE fromId!='%s' AND fromEntity='team' AND toEntity='team' AND relation=%d) )",
+                  "%s AND id NOT IN ( SELECT '%s' UNION SELECT toId FROM entity_relationship WHERE fromId!='%s' AND fromEntity='team' AND toEntity='team' AND relation=%d )",
                   condition, team.getId(), team.getId(), Relationship.PARENT_OF.ordinal());
         } else {
           condition =
@@ -3260,7 +3260,7 @@ public interface CollectionDAO {
           // All the parentless teams should come under "organization" team
           condition =
               String.format(
-                  "%s AND id NOT IN ( (SELECT '%s') UNION (SELECT toId FROM entity_relationship WHERE fromId!='%s' AND fromEntity='team' AND toEntity='team' AND relation=%d) )",
+                  "%s AND id NOT IN ( SELECT '%s' UNION SELECT toId FROM entity_relationship WHERE fromId!='%s' AND fromEntity='team' AND toEntity='team' AND relation=%d )",
                   condition, team.getId(), team.getId(), Relationship.PARENT_OF.ordinal());
         } else {
           condition =
