@@ -11,11 +11,11 @@
  *  limitations under the License.
  */
 
-import collaborationImg from '../assets/img/login-screen/data-collaboration.png';
-import discoveryImg from '../assets/img/login-screen/data-discovery.png';
-import governanceImg from '../assets/img/login-screen/data-governance.png';
-import insightImg from '../assets/img/login-screen/data-insights.png';
-import dataQualityImg from '../assets/img/login-screen/data-quality.png';
+const collaborationImg = 'https://dst-data-lake.oss-cn-beijing.aliyuncs.com/openmetadata/login-screen/data-collaboration.png';
+const discoveryImg = 'https://dst-data-lake.oss-cn-beijing.aliyuncs.com/openmetadata/login-screen/data-discovery.png';
+const governanceImg = 'https://dst-data-lake.oss-cn-beijing.aliyuncs.com/openmetadata/login-screen/data-governance.png';
+const insightImg = 'https://dst-data-lake.oss-cn-beijing.aliyuncs.com/openmetadata/login-screen/data-insights.png';
+const dataQualityImg = 'https://dst-data-lake.oss-cn-beijing.aliyuncs.com/openmetadata/login-screen/data-quality.png';
 
 class LoginClassBase {
   public carouselImages() {
