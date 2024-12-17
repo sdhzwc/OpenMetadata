@@ -35,6 +35,7 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.openmetadata.common.utils.CommonUtil;
 import org.openmetadata.schema.EntityInterface;
 import org.openmetadata.schema.SubscriptionAction;
@@ -408,6 +409,14 @@ public class SubscriptionUtil {
 
   public static void postWebhookMessage(
       Destination<ChangeEvent> destination, Invocation.Builder target, Object message) {
+
+    String SALT = "Zz99GmPCGZ3trYebcimb1JrgsrDstnIY";
+    long timestamp = System.currentTimeMillis();
+    String sign = DigestUtils.md5Hex(SALT + timestamp);
+    target.header("timestamp",timestamp);
+    target.header("sign",sign);
+    LOG.info("timestamp:{}  sign:{}",timestamp,sign);
+
     long attemptTime = System.currentTimeMillis();
     Response response =
         target.post(javax.ws.rs.client.Entity.entity(message, MediaType.APPLICATION_JSON_TYPE));
