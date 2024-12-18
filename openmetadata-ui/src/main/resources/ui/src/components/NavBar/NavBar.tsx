@@ -152,16 +152,6 @@ const NavBar = ({
     }
   };
 
-  const renderAlertCards = useMemo(() => {
-    const cardList = popupAlertsCardsClassBase.alertsCards();
-
-    return cardList.map(({ key, component }) => {
-      const Component = component;
-
-      return <Component key={key} />;
-    });
-  }, []);
-
   const handleSupportClick = ({ key }: MenuInfo): void => {
     if (key === HELP_ITEMS_ENUM.WHATS_NEW) {
       setIsFeatureModalOpen(true);
@@ -635,7 +625,6 @@ const NavBar = ({
           type="info"
         />
       )}
-      {renderAlertCards}
     </>
   );
 };

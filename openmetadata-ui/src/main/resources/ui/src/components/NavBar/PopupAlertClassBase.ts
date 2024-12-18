@@ -11,20 +11,20 @@
  *  limitations under the License.
  */
 
-// import WhatsNewAlert from '../Modals/WhatsNewModal/WhatsNewAlert/WhatsNewAlert.component';
-// import GithubStarCard from '../MyData/GithubStarCard/GithubStarCard.component';
+import WhatsNewAlert from '../Modals/WhatsNewModal/WhatsNewAlert/WhatsNewAlert.component';
+import GithubStarCard from '../MyData/GithubStarCard/GithubStarCard.component';
 
 class PopupAlertsCardsClassBase {
   public alertsCards() {
     return [
-      // {
-      //   key: 'whatNewAlertCard',
-      //   component: WhatsNewAlert,
-      // },
-      // {
-      //   key: 'githubPopupAlertCard',
-      //   component: GithubStarCard,
-      // },
+      {
+        key: 'whatNewAlertCard',
+        component: WhatsNewAlert,
+      },
+      {
+        key: 'githubPopupAlertCard',
+        component: GithubStarCard,
+      },
     ];
   }
 }
