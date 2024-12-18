@@ -32,7 +32,6 @@ import classNames from 'classnames';
 import { CookieStorage } from 'cookie-storage';
 import i18next from 'i18next';
 import { debounce, upperCase } from 'lodash';
-import { MenuInfo } from 'rc-menu/lib/interface';
 import React, {
   useCallback,
   useEffect,
@@ -53,7 +52,6 @@ import {
   NOTIFICATION_READ_TIMER,
   SOCKET_EVENTS,
 } from '../../constants/constants';
-import { HELP_ITEMS_ENUM } from '../../constants/Navbar.constants';
 import { useWebSocketConnector } from '../../context/WebSocketProvider/WebSocketProvider';
 import { EntityTabs, EntityType } from '../../enums/entity.enum';
 import { useApplicationStore } from '../../hooks/useApplicationStore';
@@ -91,12 +89,10 @@ import Suggestions from '../AppBar/Suggestions';
 import CmdKIcon from '../common/CmdKIcon/CmdKIcon.component';
 import { useEntityExportModalProvider } from '../Entity/EntityExportModalProvider/EntityExportModalProvider.component';
 import { CSVExportWebsocketResponse } from '../Entity/EntityExportModalProvider/EntityExportModalProvider.interface';
-import WhatsNewModal from '../Modals/WhatsNewModal/WhatsNewModal';
 import NotificationBox from '../NotificationBox/NotificationBox.component';
 import { UserProfileIcon } from '../Settings/Users/UserProfileIcon/UserProfileIcon.component';
 import './nav-bar.less';
 import { NavBarProps } from './NavBar.interface';
-import popupAlertsCardsClassBase from './PopupAlertClassBase';
 
 const cookieStorage = new CookieStorage();
 
@@ -135,7 +131,6 @@ const NavBar = ({
   const [hasMentionNotification, setHasMentionNotification] =
     useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<string>('Task');
-  const [isFeatureModalOpen, setIsFeatureModalOpen] = useState<boolean>(false);
   const [version, setVersion] = useState<string>();
 
   const fetchOMVersion = async () => {
@@ -152,11 +147,6 @@ const NavBar = ({
     }
   };
 
-  const handleSupportClick = ({ key }: MenuInfo): void => {
-    if (key === HELP_ITEMS_ENUM.WHATS_NEW) {
-      setIsFeatureModalOpen(true);
-    }
-  };
 
   const entitiesSelect = useMemo(
     () => (
@@ -381,8 +371,6 @@ const NavBar = ({
     refreshPage();
   }, []);
 
-  const handleModalCancel = useCallback(() => setIsFeatureModalOpen(false), []);
-
   const handleSelectOption = useCallback((text: string) => {
     history.replace({
       search: `?withinPageSearch=${text}`,
@@ -581,7 +569,6 @@ const NavBar = ({
           <Dropdown
             menu={{
               items: getHelpDropdownItems(version),
-              onClick: handleSupportClick,
             }}
             overlayStyle={{ width: 175 }}
             placement="bottomRight"
@@ -599,11 +586,6 @@ const NavBar = ({
           <UserProfileIcon />
         </Space>
       </div>
-      <WhatsNewModal
-        header={`${t('label.whats-new')}!`}
-        visible={isFeatureModalOpen}
-        onCancel={handleModalCancel}
-      />
 
       {showVersionMissMatchAlert && (
         <Alert
