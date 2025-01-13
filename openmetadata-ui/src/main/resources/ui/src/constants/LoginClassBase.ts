@@ -11,11 +11,16 @@
  *  limitations under the License.
  */
 
-const collaborationImg = 'https://dst-data-lake.oss-cn-beijing.aliyuncs.com/openmetadata/login-screen/data-collaboration.png';
-const discoveryImg = 'https://dst-data-lake.oss-cn-beijing.aliyuncs.com/openmetadata/login-screen/data-discovery.png';
-const governanceImg = 'https://dst-data-lake.oss-cn-beijing.aliyuncs.com/openmetadata/login-screen/data-governance.png';
-const insightImg = 'https://dst-data-lake.oss-cn-beijing.aliyuncs.com/openmetadata/login-screen/data-insights.png';
-const dataQualityImg = 'https://dst-data-lake.oss-cn-beijing.aliyuncs.com/openmetadata/login-screen/data-quality.png';
+const collaborationImg =
+  'https://dst-data-lake.oss-cn-beijing.aliyuncs.com/openmetadata/login-screen/data-collaboration.png';
+const discoveryImg =
+  'https://dst-data-lake.oss-cn-beijing.aliyuncs.com/openmetadata/login-screen/data-discovery.png';
+const governanceImg =
+  'https://dst-data-lake.oss-cn-beijing.aliyuncs.com/openmetadata/login-screen/data-governance.png';
+const insightImg =
+  'https://dst-data-lake.oss-cn-beijing.aliyuncs.com/openmetadata/login-screen/data-insights.png';
+const dataQualityImg =
+  'https://dst-data-lake.oss-cn-beijing.aliyuncs.com/openmetadata/login-screen/data-quality.png';
 
 class LoginClassBase {
   public carouselImages() {

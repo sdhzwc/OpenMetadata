@@ -147,7 +147,6 @@ const NavBar = ({
     }
   };
 
-
   const entitiesSelect = useMemo(
     () => (
       <Select
