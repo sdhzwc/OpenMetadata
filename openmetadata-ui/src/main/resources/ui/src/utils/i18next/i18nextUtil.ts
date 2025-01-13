@@ -61,7 +61,7 @@ export const getInitOptions = (): InitOptions => {
       'nl-NL': { translation: nlNL },
       'pr-PR': { translation: prPR },
     },
-    fallbackLng: ['en-US'],
+    fallbackLng: ['zh-CN'],
     detection: {
       order: ['cookie'],
       caches: ['cookie'], // cache user language on
