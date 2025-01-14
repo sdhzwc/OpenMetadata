@@ -470,7 +470,9 @@ export const renderDataInsightLineChart = (
       <XAxis
         allowDuplicatedCategory={false}
         dataKey="day"
-        tickFormatter={(value: number) => customFormatDateTime(value, 'MMM dd')}
+        tickFormatter={(value: number) =>
+          customFormatDateTime(value, 'yyyy-MMMM-dd')
+        }
         type="category"
       />
       <YAxis

@@ -217,7 +217,7 @@ const TotalDataAssetsWidget = ({
                     allowDuplicatedCategory={false}
                     dataKey="day"
                     tickFormatter={(value: number) =>
-                      customFormatDateTime(value, 'MMM dd')
+                      customFormatDateTime(value, 'yyyy-MMMM-dd')
                     }
                   />
                   <YAxis />

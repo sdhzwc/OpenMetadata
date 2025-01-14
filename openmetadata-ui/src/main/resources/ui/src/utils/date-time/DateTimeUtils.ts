@@ -37,9 +37,9 @@ export const formatDate = (date?: number) => {
     return '';
   }
 
-  const dateTime = DateTime.fromMillis(date, { locale: 'en-US' });
+  const dateTime = DateTime.fromMillis(date, { locale: i18next.language });
 
-  return dateTime.setLocale('en-US').toLocaleString(DateTime.DATE_MED);
+  return dateTime.setLocale(i18next.language).toLocaleString(DateTime.DATE_MED);
 };
 
 /**
@@ -58,7 +58,7 @@ export const formatDateTimeLong = (timestamp: number, format?: string) =>
 export const getTimeZone = (): string => {
   // Getting local time zone
   const timeZoneToString = new Date()
-    .toLocaleDateString('en-US', {
+    .toLocaleDateString(i18next.language, {
       day: '2-digit',
       timeZoneName: 'long',
     })
@@ -122,7 +122,9 @@ export const customFormatDateTime = (
  */
 export const getRelativeTime = (timeStamp?: number): string => {
   return !isNil(timeStamp)
-    ? DateTime.fromMillis(timeStamp, { locale: 'en-US' }).toRelative() ?? ''
+    ? DateTime.fromMillis(timeStamp, {
+        locale: i18next.language,
+      }).toRelative() ?? ''
     : '';
 };
 
@@ -137,9 +139,11 @@ export const getRelativeCalendar = (
   baseTimeStamp?: number
 ): string => {
   return capitalize(
-    DateTime.fromMillis(timeStamp, { locale: 'en-US' }).toRelativeCalendar({
+    DateTime.fromMillis(timeStamp, {
+      locale: i18next.language,
+    }).toRelativeCalendar({
       base: baseTimeStamp
-        ? DateTime.fromMillis(baseTimeStamp, { locale: 'en-US' })
+        ? DateTime.fromMillis(baseTimeStamp, { locale: i18next.language })
         : DateTime.now(),
     }) || ''
   );
