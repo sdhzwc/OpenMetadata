@@ -247,7 +247,7 @@ const getGraphFilteredData = (
     .map((data) => {
       if (data.timestamp && data.entityType) {
         let value;
-        const timestamp = customFormatDateTime(data.timestamp, 'MMM dd');
+        const timestamp = customFormatDateTime(data.timestamp, 'yyyy-MMMM-dd');
         if (!entities.includes(data.entityType ?? '')) {
           entities.push(data.entityType ?? '');
         }
@@ -318,7 +318,7 @@ export const getFormattedActiveUsersData = (
   const formattedData = activeUsers.map((user) => ({
     ...user,
     timestampValue: user.timestamp,
-    timestamp: customFormatDateTime(user.timestamp, 'MMM dd'),
+    timestamp: customFormatDateTime(user.timestamp, 'yyyy-MMMM-dd'),
   }));
 
   const latestCount = Number(last(formattedData)?.activeUsers);

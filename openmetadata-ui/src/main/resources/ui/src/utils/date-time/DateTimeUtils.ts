@@ -110,9 +110,9 @@ export const customFormatDateTime = (
     return formatDateTime(milliseconds);
   }
 
-  return DateTime.fromMillis(milliseconds, { locale: 'en-US' }).toFormat(
-    format
-  );
+  return DateTime.fromMillis(milliseconds, {
+    locale: i18next.language,
+  }).toFormat(format);
 };
 
 /**
