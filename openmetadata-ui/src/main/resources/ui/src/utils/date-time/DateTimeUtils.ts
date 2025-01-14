@@ -10,6 +10,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
+import i18next from 'i18next';
 import { capitalize, isNil, toInteger, toNumber } from 'lodash';
 import { DateTime, Duration } from 'luxon';
 
@@ -22,7 +23,7 @@ export const formatDateTime = (date?: number) => {
     return '';
   }
 
-  const dateTime = DateTime.fromMillis(date, { locale: 'en-US' });
+  const dateTime = DateTime.fromMillis(date, { locale: i18next.language });
 
   return dateTime.toLocaleString(DateTime.DATETIME_MED);
 };
