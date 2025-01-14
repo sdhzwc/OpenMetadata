@@ -81,9 +81,9 @@ export const formatDateTimeWithTimezone = (timeStamp: number): string => {
     return '';
   }
 
-  const dateTime = DateTime.fromMillis(timeStamp, { locale: 'en-US' });
+  const dateTime = DateTime.fromMillis(timeStamp, { locale: i18next.language });
 
-  return dateTime.toLocaleString(DateTime.DATETIME_FULL);
+  return dateTime.toLocaleString(DateTime.DATETIME_MED);
 };
 
 /**
