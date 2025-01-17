@@ -632,12 +632,12 @@ public class FeedRepository {
             String taskStatus = l.get(2);
             threadCount.setEntityLink(eLink);
             int count = Integer.parseInt(l.get(3));
-            if (type.equalsIgnoreCase("Conversation")) {
+            if ("Conversation".equalsIgnoreCase(type)) {
               threadCount.setConversationCount(count);
-            } else if (type.equalsIgnoreCase("Task")) {
-              if (taskStatus.equals("Open")) {
+            } else if ("Task".equalsIgnoreCase(type)) {
+              if ("Open".equals(taskStatus)) {
                 threadCount.setOpenTaskCount(count);
-              } else if (taskStatus.equals("Closed")) {
+              } else if ("Closed".equals(taskStatus)) {
                 threadCount.setClosedTaskCount(count);
               }
             }
