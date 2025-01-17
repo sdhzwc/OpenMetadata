@@ -13,6 +13,7 @@
 
 import { Typography } from 'antd';
 import { DefaultOptionType } from 'antd/lib/select';
+import { t } from 'i18next';
 import { isEmpty, isUndefined } from 'lodash';
 import React from 'react';
 import { StatusType } from '../components/common/StatusBadge/StatusBadge.interface';
@@ -121,7 +122,7 @@ export const StatusClass = {
 export const StatusFilters = Object.values(Status)
   .filter((status) => status !== Status.Deprecated) // Deprecated not in use for this release
   .map((status) => ({
-    text: status,
+    text: t('label.' + status.toLowerCase()),
     value: status,
   }));
 

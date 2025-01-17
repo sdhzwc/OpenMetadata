@@ -188,7 +188,7 @@ const GlossaryTermTab = ({
           return (
             <StatusBadge
               dataTestId={record.fullyQualifiedName + '-status'}
-              label={status}
+              label={t('label.' + status.toLowerCase())}
               status={StatusClass[status]}
             />
           );
