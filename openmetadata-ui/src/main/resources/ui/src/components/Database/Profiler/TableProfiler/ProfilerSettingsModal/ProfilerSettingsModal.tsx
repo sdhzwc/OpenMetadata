@@ -428,6 +428,7 @@ const ProfilerSettingsModal: React.FC<ProfilerSettingsModalProps> = ({
       cancelButtonProps={{
         type: 'link',
       }}
+      cancelText={t('label.cancel')}
       closable={false}
       confirmLoading={isLoading}
       data-testid="profiler-settings-modal"
