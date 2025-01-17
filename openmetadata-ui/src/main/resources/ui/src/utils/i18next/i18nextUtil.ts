@@ -26,9 +26,9 @@ import ruRU from '../../locale/languages/ru-ru.json';
 import zhCN from '../../locale/languages/zh-cn.json';
 
 export enum SupportedLocales {
+  简体中文 = 'zh-CN',
   English = 'en-US',
   Français = 'fr-FR',
-  简体中文 = 'zh-CN',
   日本語 = 'ja-JP',
   Português = 'pt-BR',
   Español = 'es-ES',
