@@ -55,7 +55,7 @@ import { DataInsightCustomChartResult } from '../../rest/DataInsightAPI';
 import { getLatestKpiResult, getListKpiResult } from '../../rest/KpiAPI';
 import { updateActiveChartFilter } from '../../utils/ChartUtils';
 import { CustomTooltip, renderLegend } from '../../utils/DataInsightUtils';
-import { formatDate } from '../../utils/date-time/DateTimeUtils';
+import { customFormatDateTime } from '../../utils/date-time/DateTimeUtils';
 import { showErrorToast } from '../../utils/ToastUtils';
 import ErrorPlaceHolder from '../common/ErrorWithPlaceholder/ErrorPlaceHolder';
 import PageHeader from '../PageHeader/PageHeader.component';
@@ -258,7 +258,9 @@ const KPIChart: FC<Props> = ({
                     <XAxis
                       allowDuplicatedCategory={false}
                       dataKey="day"
-                      tickFormatter={formatDate}
+                      tickFormatter={(value: number) =>
+                        customFormatDateTime(value, 'yyyy-MMMM-dd')
+                      }
                       type="category"
                     />
                     <YAxis dataKey="count" />

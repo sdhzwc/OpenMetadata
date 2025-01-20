@@ -267,7 +267,7 @@ const KPIWidget = ({
                   allowDuplicatedCategory={false}
                   dataKey="day"
                   tickFormatter={(value: number) =>
-                    customFormatDateTime(value, 'MMM DD')
+                    customFormatDateTime(value, 'yyyy-MMMM-dd')
                   }
                   type="category"
                 />
