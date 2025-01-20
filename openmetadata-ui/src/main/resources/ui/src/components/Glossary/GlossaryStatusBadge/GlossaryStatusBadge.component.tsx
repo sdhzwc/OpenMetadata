@@ -11,6 +11,7 @@
  *  limitations under the License.
  */
 import { Divider, Space } from 'antd';
+import { t } from 'i18next';
 import React from 'react';
 import { Status } from '../../../generated/entity/data/glossaryTerm';
 import { StatusClass } from '../../../utils/GlossaryUtils';
@@ -20,7 +21,10 @@ export const GlossaryStatusBadge = ({ status }: { status: Status }) => {
   return (
     <Space>
       <Divider className="m-x-xs h-6" type="vertical" />
-      <StatusBadge label={status} status={StatusClass[status]} />
+      <StatusBadge
+        label={t('label.' + status.toLowerCase())}
+        status={StatusClass[status]}
+      />
     </Space>
   );
 };
