@@ -12,7 +12,7 @@
  */
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Form, FormProps, Space } from 'antd';
-import { omit } from 'lodash';
+import { capitalize, map, omit } from 'lodash';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NAME_FIELD_RULES } from '../../../constants/Form.constants';
@@ -51,10 +51,12 @@ const AddDomainForm = ({
   const [form] = Form.useForm(formRef);
   const { permissions } = usePermissionProvider();
 
-  const domainTypeArray = Object.keys(DomainType).map((key) => ({
-    key,
-    value: DomainType[key as keyof typeof DomainType],
-  }));
+  const domainTypeArray = [
+    ...map(DomainType, (value) => ({
+      label: t('label.' + capitalize(value).toLowerCase()),
+      value: value,
+    })),
+  ];
 
   const formFields: FieldProp[] = [
     {

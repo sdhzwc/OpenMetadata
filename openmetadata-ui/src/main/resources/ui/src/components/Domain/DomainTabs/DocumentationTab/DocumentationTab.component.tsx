@@ -345,7 +345,7 @@ const DocumentationTab = ({
                 </div>
                 {!editDomainType && (
                   <Space wrap data-testid="domain-type-label" size={6}>
-                    {(domain as Domain).domainType}
+                    {t('label.' + (domain as Domain).domainType.toLowerCase())}
                   </Space>
                 )}
 

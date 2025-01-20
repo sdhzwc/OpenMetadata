@@ -13,6 +13,8 @@
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { Button, Col, Form, Row, Select, Space } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
+import { t } from 'i18next';
+import { capitalize, map } from 'lodash';
 import React, { useState } from 'react';
 import { DomainType } from '../../../generated/api/domains/createDomain';
 import { DomainTypeSelectFormProps } from './DomainTypeSelectForm.interface';
@@ -24,10 +26,12 @@ const DomainTypeSelectForm = ({
 }: DomainTypeSelectFormProps) => {
   const [form] = useForm();
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
-  const domainTypeArray = Object.keys(DomainType).map((key) => ({
-    key,
-    value: DomainType[key as keyof typeof DomainType],
-  }));
+  const domainTypeArray = [
+    ...map(DomainType, (value) => ({
+      label: t('label.' + capitalize(value).toLowerCase()),
+      value: value,
+    })),
+  ];
 
   return (
     <Form
