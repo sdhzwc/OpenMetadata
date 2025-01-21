@@ -1175,6 +1175,7 @@ const TeamDetailsV1 = ({
         {selectedEntity && (
           <Modal
             centered
+            cancelText={t('label.cancel')}
             closable={false}
             confirmLoading={isModalLoading}
             maskClosable={false}

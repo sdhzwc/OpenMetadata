@@ -180,6 +180,7 @@ const TeamsSubscription = ({
           <Modal
             centered
             open
+            cancelText={t('label.cancel')}
             closable={false}
             confirmLoading={isLoading}
             maskClosable={false}

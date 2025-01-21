@@ -330,6 +330,7 @@ const RolesDetailPage = () => {
         {selectedEntity && (
           <Modal
             centered
+            cancelText={t('label.cancel')}
             closable={false}
             confirmLoading={isLoadingOnSave}
             maskClosable={false}

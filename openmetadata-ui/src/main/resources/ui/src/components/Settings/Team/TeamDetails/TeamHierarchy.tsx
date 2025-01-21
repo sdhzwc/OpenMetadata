@@ -272,6 +272,7 @@ const TeamHierarchy: FC<TeamHierarchyProps> = ({
       <Modal
         centered
         destroyOnClose
+        cancelText={t('label.cancel')}
         closable={false}
         confirmLoading={isTableLoading}
         data-testid="confirmation-modal"

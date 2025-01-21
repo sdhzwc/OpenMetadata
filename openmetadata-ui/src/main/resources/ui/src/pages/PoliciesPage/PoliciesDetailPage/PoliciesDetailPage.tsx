@@ -500,6 +500,7 @@ const PoliciesDetailPage = () => {
         {selectedEntity && (
           <Modal
             centered
+            cancelText={t('label.cancel')}
             closable={false}
             confirmLoading={isloadingOnSave}
             maskClosable={false}

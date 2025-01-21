@@ -129,18 +129,19 @@ const AddAttributeModal: FC<Props> = ({
   return (
     <Modal
       centered
+      cancelText={t('label.cancel')}
       className="ant-attribute-modal"
       closable={false}
       confirmLoading={isModalLoading}
       data-testid="modal-container"
       maskClosable={false}
-      okText="Submit"
+      okText={t('label.confirm')}
       open={isOpen}
       title={
         <span data-testid="modal-title">
           {title}{' '}
           <span className="text-grey-muted text-sm">
-            {`(${selectedValues.length}/${data.length} selected)`}
+            {`(${selectedValues.length}/${data.length})`}
           </span>
         </span>
       }
