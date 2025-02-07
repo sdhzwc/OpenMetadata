@@ -44,6 +44,7 @@ const TestEmail = ({ onCancel }: TesEmailProps) => {
     <Modal
       destroyOnClose
       open
+      cancelText={t('label.cancel')}
       closable={false}
       closeIcon={null}
       data-testid="test-email-modal"
