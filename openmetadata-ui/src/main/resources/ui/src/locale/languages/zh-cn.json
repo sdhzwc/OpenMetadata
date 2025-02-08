@@ -1708,7 +1708,7 @@
     "page-sub-header-for-data-observability": "通过 UI 界面, 从质控测试集服务中提取元数据",
     "page-sub-header-for-data-quality": "通过引入数据质控测试提升数据的可信任度, 构建稳健的衍生数据产品",
     "page-sub-header-for-databases": "从最流行的数据库类型服务中提取元数据",
-    "page-sub-header-for-lineage-config-setting": "Configure the lineage view settings.",
+    "page-sub-header-for-lineage-config-setting": "配置数据血缘关系",
     "page-sub-header-for-login-configuration": "登录配置，例如失败尝试次数或过期计时器",
     "page-sub-header-for-messagings": "从最常用的消息队列类型服务中提取元数据",
     "page-sub-header-for-metadata": "通过 UI 界面, 从元数据类型服务中提取元数据",

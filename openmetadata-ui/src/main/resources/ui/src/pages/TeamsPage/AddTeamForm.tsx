@@ -134,6 +134,7 @@ const AddTeamForm: React.FC<AddTeamFormType> = ({
   return (
     <Modal
       centered
+      cancelText={t('label.cancel')}
       closable={false}
       confirmLoading={isLoading}
       maskClosable={false}
