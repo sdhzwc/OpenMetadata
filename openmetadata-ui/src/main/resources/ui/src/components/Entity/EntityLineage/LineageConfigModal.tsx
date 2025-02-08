@@ -44,7 +44,9 @@ const LineageConfigModal: React.FC<LineageConfigModalProps> = ({
 
   return (
     <Modal
+      cancelText={t('label.cancel')}
       maskClosable={false}
+      okText={t('label.confirm')}
       open={visible}
       title={t('label.lineage-config')}
       onCancel={onCancel}
