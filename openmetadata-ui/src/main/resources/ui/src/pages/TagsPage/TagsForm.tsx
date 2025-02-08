@@ -234,6 +234,7 @@ const TagsForm = ({
     <Modal
       centered
       destroyOnClose
+      cancelText={t('label.cancel')}
       closable={false}
       data-testid="modal-container"
       okButtonProps={{
