@@ -14,7 +14,7 @@ import Icon from '@ant-design/icons';
 import { Button, Col, Divider, Row, Space, Tooltip, Typography } from 'antd';
 import ButtonGroup from 'antd/lib/button/button-group';
 import { AxiosError } from 'axios';
-import { capitalize, isEmpty } from 'lodash';
+import { isEmpty } from 'lodash';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -478,7 +478,7 @@ export const DataAssetsHeader = ({
                   <Tooltip
                     title={t('label.field-entity', {
                       field: t(`label.${isFollowing ? 'un-follow' : 'follow'}`),
-                      entity: capitalize(entityType),
+                      entity: t(`label.${entityType}`),
                     })}>
                     <Button
                       className="w-16 p-0"
