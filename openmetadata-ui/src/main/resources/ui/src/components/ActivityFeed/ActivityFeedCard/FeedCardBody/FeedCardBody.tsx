@@ -106,9 +106,9 @@ const FeedCardBody: FC<FeedBodyProp> = ({
         {!isUndefined(announcementDetails) ? (
           <Space data-testid="announcement-data" direction="vertical" size={4}>
             <Typography.Text className="feed-body-schedule text-xs text-grey-muted">
-              {t('label.schedule')}{' '}
-              {formatDateTime(announcementDetails.startTime)}{' '}
-              {t('label.to-lowercase')}{' '}
+              {t('label.schedule')}
+              {': '}
+              {formatDateTime(announcementDetails.startTime)} {' ～ '}
               {formatDateTime(announcementDetails.endTime)}{' '}
             </Typography.Text>
             <Typography.Text className="font-medium">

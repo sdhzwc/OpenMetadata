@@ -26,7 +26,9 @@ import { getTimeZone } from '../../../utils/date-time/DateTimeUtils';
 import { getEntityFeedLink } from '../../../utils/EntityUtils';
 import { showErrorToast, showSuccessToast } from '../../../utils/ToastUtils';
 
+import i18next from 'i18next';
 import { useApplicationStore } from '../../../hooks/useApplicationStore';
+import { getAntdLocale } from '../../../utils/Locale/LocaleUtil';
 import RichTextEditor from '../../common/RichTextEditor/RichTextEditor';
 import './announcement-modal.less';
 
@@ -57,6 +59,8 @@ const AddAnnouncementModal: FC<Props> = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { t } = useTranslation();
+
+  const locale = getAntdLocale(i18next.language).DatePicker;
 
   const handleCreateAnnouncement = async ({
     title,
@@ -147,7 +151,12 @@ const AddAnnouncementModal: FC<Props> = ({
                 required: true,
               },
             ]}>
-            <DatePicker className="w-full" />
+            <DatePicker
+              showTime
+              className="w-full"
+              format="YYYY-MM-DD HH:mm"
+              locale={locale}
+            />
           </Form.Item>
           <Form.Item
             label={t('label.end-date-time-zone', {
@@ -160,7 +169,12 @@ const AddAnnouncementModal: FC<Props> = ({
                 required: true,
               },
             ]}>
-            <DatePicker className="w-full" />
+            <DatePicker
+              showTime
+              className="w-full"
+              format="YYYY-MM-DD HH:mm"
+              locale={locale}
+            />
           </Form.Item>
         </Space>
         <Form.Item

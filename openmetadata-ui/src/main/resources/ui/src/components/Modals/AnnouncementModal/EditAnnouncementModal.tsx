@@ -12,12 +12,14 @@
  */
 
 import { DatePicker, Form, Input, Modal, Space } from 'antd';
+import i18next from 'i18next';
 import moment from 'moment';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { VALIDATION_MESSAGES } from '../../../constants/constants';
 import { AnnouncementDetails } from '../../../generated/entity/feed/thread';
 import { getTimeZone } from '../../../utils/date-time/DateTimeUtils';
+import { getAntdLocale } from '../../../utils/Locale/LocaleUtil';
 import { showErrorToast } from '../../../utils/ToastUtils';
 import RichTextEditor from '../../common/RichTextEditor/RichTextEditor';
 import { CreateAnnouncement } from './AddAnnouncementModal';
@@ -118,7 +120,12 @@ const EditAnnouncementModal: FC<Props> = ({
                 required: true,
               },
             ]}>
-            <DatePicker className="w-full" />
+            <DatePicker
+              showTime
+              className="w-full"
+              format="YYYY-MM-DD HH:mm"
+              locale={getAntdLocale(i18next.language).DatePicker}
+            />
           </Form.Item>
           <Form.Item
             label={t('label.end-date-time-zone', {
@@ -131,7 +138,12 @@ const EditAnnouncementModal: FC<Props> = ({
                 required: true,
               },
             ]}>
-            <DatePicker className="w-full" />
+            <DatePicker
+              showTime
+              className="w-full"
+              format="YYYY-MM-DD HH:mm"
+              locale={getAntdLocale(i18next.language).DatePicker}
+            />
           </Form.Item>
         </Space>
         <Form.Item

@@ -58,17 +58,13 @@ export const formatDateTimeLong = (timestamp: number, format?: string) =>
 export const getTimeZone = (): string => {
   // Getting local time zone
   const timeZoneToString = new Date()
-    .toLocaleDateString('en-US', {
+    .toLocaleDateString(i18next.language, {
       day: '2-digit',
-      timeZoneName: 'long',
+      timeZoneName: 'short',
     })
     .slice(4);
 
-  // Line below finds out the abbreviation for time zone
-  // e.g. India Standard Time --> IST
-  const abbreviation = timeZoneToString.match(/\b[A-Z]+/g)?.join('') || '';
-
-  return abbreviation;
+  return timeZoneToString;
 };
 
 /**
