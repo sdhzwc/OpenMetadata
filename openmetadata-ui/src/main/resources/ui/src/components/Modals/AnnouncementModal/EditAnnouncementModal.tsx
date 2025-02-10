@@ -66,6 +66,7 @@ const EditAnnouncementModal: FC<Props> = ({
   return (
     <Modal
       centered
+      cancelText={t('label.cancel')}
       className="announcement-modal"
       closable={false}
       data-testid="edit-announcement"

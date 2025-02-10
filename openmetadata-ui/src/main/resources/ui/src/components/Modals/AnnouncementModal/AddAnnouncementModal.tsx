@@ -99,6 +99,7 @@ const AddAnnouncementModal: FC<Props> = ({
   return (
     <Modal
       centered
+      cancelText={t('label.cancel')}
       className="announcement-modal"
       closable={false}
       confirmLoading={isLoading}
@@ -110,7 +111,7 @@ const AddAnnouncementModal: FC<Props> = ({
         type: 'primary',
         htmlType: 'submit',
       }}
-      okText="Submit"
+      okText={t('label.save')}
       open={open}
       title={t('message.make-an-announcement')}
       width={720}

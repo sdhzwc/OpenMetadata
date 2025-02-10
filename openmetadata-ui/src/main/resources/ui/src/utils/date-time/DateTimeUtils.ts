@@ -58,7 +58,7 @@ export const formatDateTimeLong = (timestamp: number, format?: string) =>
 export const getTimeZone = (): string => {
   // Getting local time zone
   const timeZoneToString = new Date()
-    .toLocaleDateString(i18next.language, {
+    .toLocaleDateString('en-US', {
       day: '2-digit',
       timeZoneName: 'long',
     })
