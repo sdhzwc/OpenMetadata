@@ -14,6 +14,7 @@
 import { CloseCircleOutlined } from '@ant-design/icons';
 import { Button, DatePicker, Dropdown, MenuProps, Space } from 'antd';
 import { RangePickerProps } from 'antd/lib/date-picker';
+import i18next from 'i18next';
 import { isUndefined, pick } from 'lodash';
 import { DateFilterType, DateRangeObject } from 'Models';
 import { MenuInfo } from 'rc-menu/lib/interface';
@@ -32,6 +33,7 @@ import {
   getDaysCount,
   getTimestampLabel,
 } from '../../../utils/DatePickerMenuUtils';
+import { getAntdLocale } from '../../../utils/Locale/LocaleUtil';
 import './date-picker-menu.less';
 
 interface DatePickerMenuProps {
@@ -163,6 +165,7 @@ const DatePickerMenu = ({
                 bordered={false}
                 clearIcon={<CloseCircleOutlined />}
                 format={(value) => value.utc().format('YYYY-MM-DD')}
+                locale={getAntdLocale(i18next.language).DatePicker}
                 open={isMenuOpen}
                 placement="bottomRight"
                 suffixIcon={null}

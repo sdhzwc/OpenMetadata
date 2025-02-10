@@ -29,6 +29,7 @@ import {
 import { RangePickerProps } from 'antd/lib/date-picker';
 import { AxiosError } from 'axios';
 import { compare } from 'fast-json-patch';
+import i18next from 'i18next';
 import { isEmpty, isUndefined, uniqBy } from 'lodash';
 import Qs from 'qs';
 import React, { FC, useEffect, useMemo, useState } from 'react';
@@ -62,6 +63,7 @@ import {
 } from '../../../rest/queryAPI';
 import { searchQuery } from '../../../rest/searchAPI';
 import { getEntityName } from '../../../utils/EntityUtils';
+import { getAntdLocale } from '../../../utils/Locale/LocaleUtil';
 import { DEFAULT_ENTITY_PERMISSION } from '../../../utils/PermissionsUtils';
 import {
   createQueryFilter,
@@ -601,6 +603,7 @@ const TableQueries: FC<TableQueriesProp> = ({
                             className="p-t-0"
                             clearIcon={<CloseCircleOutlined />}
                             data-testid="data-range-picker"
+                            locale={getAntdLocale(i18next.language).DatePicker}
                             open={isClickedCalendar}
                             suffixIcon={null}
                             onChange={onDateChange}
