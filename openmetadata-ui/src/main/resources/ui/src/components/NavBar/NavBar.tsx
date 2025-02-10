@@ -505,7 +505,7 @@ const NavBar = ({
                 <Typography.Text>
                   {activeDomainEntityRef
                     ? getEntityName(activeDomainEntityRef)
-                    : activeDomain}
+                    : t('label.all-domain-plural')}
                 </Typography.Text>
               </Col>
               <Col className="flex-center">
