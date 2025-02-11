@@ -28,6 +28,7 @@ import { addMultiOwner } from '../../utils/entity';
 import { settingClick } from '../../utils/sidebar';
 import {
   addTeamOwnerToEntity,
+  checkTeamTabCount,
   createTeam,
   hardDeleteTeam,
   searchTeam,
@@ -82,6 +83,9 @@ test.describe('Teams Page', () => {
   test('Teams Page Flow', async ({ page }) => {
     await test.step('Create a new team', async () => {
       await settingClick(page, GlobalSettingOptions.TEAMS);
+
+      await checkTeamTabCount(page);
+
       await page.waitForLoadState('networkidle');
 
       await page.waitForSelector('[data-testid="add-team"]');

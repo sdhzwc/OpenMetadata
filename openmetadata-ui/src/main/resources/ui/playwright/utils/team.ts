@@ -308,3 +308,17 @@ export const verifyAssetsInTeamsPage = async (
     page.getByTestId('assets').getByTestId('filter-count')
   ).toContainText(assetCount.toString());
 };
+
+export const checkTeamTabCount = async (page: Page) => {
+  const fetchResponse = page.waitForResponse(
+    '/api/v1/teams/name/*?fields=*childrenCount*include=all'
+  );
+  const response = await fetchResponse;
+  const jsonRes = await response.json();
+
+  await expect(
+    page.locator(
+      '[data-testid="teams"] [data-testid="count"] [data-testid="filter-count"]'
+    )
+  ).toContainText(jsonRes.childrenCount.toString());
+};
