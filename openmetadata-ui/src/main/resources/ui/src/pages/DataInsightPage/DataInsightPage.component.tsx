@@ -125,7 +125,9 @@ const DataInsightPage = () => {
   }
 
   return (
-    <PageLayoutV1 leftPanel={<LeftPanel />} pageTitle={t('label.data-insight')}>
+    <PageLayoutV1
+      leftPanel={<LeftPanel />}
+      pageTitle={t('label.insight-plural')}>
       <DataInsightProvider>
         <Row
           className="page-container"
