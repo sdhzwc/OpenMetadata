@@ -108,7 +108,7 @@ const DataQualityPage = () => {
   }, []);
 
   return (
-    <PageLayoutV1 pageTitle="Quality">
+    <PageLayoutV1 pageTitle={t('label.data-quality')}>
       <Row className="p-t-md" gutter={[0, 16]}>
         <Col className="p-x-lg" span={24}>
           <Typography.Title
