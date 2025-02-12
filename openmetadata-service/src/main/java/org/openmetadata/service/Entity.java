@@ -54,19 +54,7 @@ import org.openmetadata.schema.type.MetadataOperation;
 import org.openmetadata.schema.type.TagLabel;
 import org.openmetadata.service.exception.CatalogExceptionMessage;
 import org.openmetadata.service.exception.EntityNotFoundException;
-import org.openmetadata.service.jdbi3.ChangeEventRepository;
-import org.openmetadata.service.jdbi3.CollectionDAO;
-import org.openmetadata.service.jdbi3.EntityRepository;
-import org.openmetadata.service.jdbi3.EntityTimeSeriesRepository;
-import org.openmetadata.service.jdbi3.FeedRepository;
-import org.openmetadata.service.jdbi3.LineageRepository;
-import org.openmetadata.service.jdbi3.PolicyRepository;
-import org.openmetadata.service.jdbi3.Repository;
-import org.openmetadata.service.jdbi3.RoleRepository;
-import org.openmetadata.service.jdbi3.SuggestionRepository;
-import org.openmetadata.service.jdbi3.SystemRepository;
-import org.openmetadata.service.jdbi3.TokenRepository;
-import org.openmetadata.service.jdbi3.UsageRepository;
+import org.openmetadata.service.jdbi3.*;
 import org.openmetadata.service.resources.feeds.MessageParser.EntityLink;
 import org.openmetadata.service.search.SearchRepository;
 import org.openmetadata.service.search.indexes.SearchIndex;
@@ -93,6 +81,7 @@ public final class Entity {
   @Getter @Setter private static UsageRepository usageRepository;
   @Getter @Setter private static SystemRepository systemRepository;
   @Getter @Setter private static ChangeEventRepository changeEventRepository;
+  @Getter @Setter private static QtzJobLockRepository qtzJobLockRepository;
   @Getter @Setter private static SearchRepository searchRepository;
   @Getter @Setter private static SuggestionRepository suggestionRepository;
   // List of all the entities

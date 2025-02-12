@@ -25,15 +25,8 @@ import static org.openmetadata.service.jdbi3.locator.ConnectionType.POSTGRES;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.sql.Timestamp;
+import java.util.*;
 import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.Getter;
@@ -350,6 +343,9 @@ public interface CollectionDAO {
 
   @CreateSqlObject
   APIEndpointDAO apiEndpointDAO();
+
+  @CreateSqlObject
+  QtzJobLockDAO qtzJobLockDAO();
 
   interface DashboardDAO extends EntityDAO<Dashboard> {
     @Override
@@ -5186,5 +5182,17 @@ public interface CollectionDAO {
     default String getNameHashColumn() {
       return "fqnHash";
     }
+  }
+
+  interface QtzJobLockDAO {
+
+    @SqlQuery("SELECT expire_time as expireTime FROM qtz_job_lock where lock_name = :lockName ")
+    Timestamp selectByLockName(@Bind("lockName") String lockName);
+
+    @SqlUpdate("INSERT INTO qtz_job_lock (lock_name,expire_time) VALUES (:lockName, :expireTime)")
+    void insert(@Bind("lockName") String lockName, @Bind("expireTime") Date expireTime);
+
+    @SqlUpdate("DELETE FROM qtz_job_lock WHERE lock_name = :lockName")
+    void deleteByLockName(@Bind("lockName") String lockName);
   }
 }

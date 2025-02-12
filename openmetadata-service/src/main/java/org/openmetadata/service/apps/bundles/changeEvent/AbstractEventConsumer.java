@@ -16,17 +16,12 @@ package org.openmetadata.service.apps.bundles.changeEvent;
 import static org.openmetadata.service.events.subscription.AlertUtil.getFilteredEvents;
 import static org.openmetadata.service.events.subscription.AlertUtil.getStartingOffset;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.UUID;
+import java.util.*;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.time.DateUtils;
 import org.openmetadata.schema.entity.events.AlertMetrics;
 import org.openmetadata.schema.entity.events.EventSubscription;
 import org.openmetadata.schema.entity.events.EventSubscriptionOffset;
@@ -233,8 +228,25 @@ public abstract class AbstractEventConsumer
     try {
       // Publish Events
       if (!eventsWithReceivers.isEmpty()) {
-        alertMetrics.withTotalEvents(alertMetrics.getTotalEvents() + eventsWithReceivers.size());
-        publishEvents(eventsWithReceivers);
+        String lockKey = String.valueOf(offset);
+        Date lockValue;
+        try {
+          lockValue = selectByLockName(lockKey);
+          Date now = new Date();
+          if (lockValue == null) {
+            lock(lockKey,DateUtils.addMinutes(now, 5));
+            alertMetrics.withTotalEvents(alertMetrics.getTotalEvents() + eventsWithReceivers.size());
+            publishEvents(eventsWithReceivers);
+            unLock(lockKey);
+          } else {
+            if (lockValue.compareTo(now) < 0){
+              unLock(lockKey);
+            }
+          }
+        } catch (Exception e) {
+          LOG.error("Error in executing the Job : {} ", e.getMessage());
+          unLock(lockKey);
+        }
       }
     } catch (Exception e) {
       LOG.error("Error in executing the Job : {} ", e.getMessage());
@@ -260,4 +272,17 @@ public abstract class AbstractEventConsumer
     }
     return eventsWithReceivers;
   }
+
+  private Date selectByLockName(String lockName) {
+    return Entity.getCollectionDAO().qtzJobLockDAO().selectByLockName(lockName);
+  }
+
+  private void lock(String lockName, Date expireTime) {
+    Entity.getCollectionDAO().qtzJobLockDAO().insert(lockName, expireTime);
+  }
+
+  private void unLock(String lockName) {
+    Entity.getCollectionDAO().qtzJobLockDAO().deleteByLockName(lockName);
+  }
+
 }
