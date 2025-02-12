@@ -14,6 +14,8 @@
 package org.openmetadata.service.jdbi3;
 import org.openmetadata.service.Entity;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @Repository
 public class QtzJobLockRepository {
@@ -24,15 +26,4 @@ public class QtzJobLockRepository {
     Entity.setQtzJobLockRepository(this);
   }
 
-  public Date selectByLockName(String lockName) {
-    return dao.selectByLockName(lockName);
-  }
-
-  public void insert(String lockName, Date expireTime) {
-    dao.insert(lockName, expireTime);
-  }
-
-  public void deleteByLockName(String lockName) {
-    dao.deleteByLockName(lockName);
-  }
 }

@@ -5186,13 +5186,23 @@ public interface CollectionDAO {
 
   interface QtzJobLockDAO {
 
-    @SqlQuery("SELECT expire_time as expireTime FROM qtz_job_lock where lock_name = :lockName ")
-    Timestamp selectByLockName(@Bind("lockName") String lockName);
+    @RegisterRowMapper(QtzJobLockMapper.class)
+    @SqlQuery("SELECT is_handle as isHandle,expire_time as expireTime FROM qtz_job_lock where lock_name = :lockName order by id desc limit 1")
+    List<QtzJobLockRecord> selectByLockName(@Bind("lockName") String lockName);
 
     @SqlUpdate("INSERT INTO qtz_job_lock (lock_name,expire_time) VALUES (:lockName, :expireTime)")
     void insert(@Bind("lockName") String lockName, @Bind("expireTime") Date expireTime);
 
-    @SqlUpdate("DELETE FROM qtz_job_lock WHERE lock_name = :lockName")
-    void deleteByLockName(@Bind("lockName") String lockName);
+    @SqlUpdate("UPDATE qtz_job_lock SET is_handle=1 WHERE lock_name = :lockName")
+    void updateByLockName(@Bind("lockName") String lockName);
+  }
+
+  record QtzJobLockRecord(int isHandle, Date expireTime) {}
+
+  class QtzJobLockMapper implements RowMapper<QtzJobLockRecord> {
+    @Override
+    public QtzJobLockRecord map(ResultSet rs, StatementContext ctx) throws SQLException {
+      return new QtzJobLockRecord(rs.getInt("isHandle"), rs.getTimestamp("expireTime"));
+    }
   }
 }

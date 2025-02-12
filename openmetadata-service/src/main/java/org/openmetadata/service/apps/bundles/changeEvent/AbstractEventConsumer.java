@@ -30,6 +30,7 @@ import org.openmetadata.schema.entity.events.SubscriptionDestination;
 import org.openmetadata.schema.type.ChangeEvent;
 import org.openmetadata.service.Entity;
 import org.openmetadata.service.events.errors.EventPublisherException;
+import org.openmetadata.service.jdbi3.CollectionDAO;
 import org.openmetadata.service.util.JsonUtils;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Job;
@@ -229,23 +230,30 @@ public abstract class AbstractEventConsumer
       // Publish Events
       if (!eventsWithReceivers.isEmpty()) {
         String lockKey = String.valueOf(offset);
-        Date lockValue;
         try {
-          lockValue = selectByLockName(lockKey);
+          List<CollectionDAO.QtzJobLockRecord> qtzJobLockRecords = selectByLockName(lockKey);
+          LOG.info("Events  offset:{} data:{} map:{}", offset, new Date(), qtzJobLockRecords);
           Date now = new Date();
-          if (lockValue == null) {
-            lock(lockKey,DateUtils.addMinutes(now, 5));
-            alertMetrics.withTotalEvents(alertMetrics.getTotalEvents() + eventsWithReceivers.size());
-            publishEvents(eventsWithReceivers);
-            unLock(lockKey);
-          } else {
-            if (lockValue.compareTo(now) < 0){
-              unLock(lockKey);
+          if (qtzJobLockRecords != null && !qtzJobLockRecords.isEmpty()){
+            CollectionDAO.QtzJobLockRecord qtzJobLockRecord = qtzJobLockRecords.get(0);
+            int isHandle = qtzJobLockRecord.isHandle();
+            if (isHandle == 1){
+                LOG.info("Events  offset:{} the data has been processed", offset);
+                return;
+            }
+            Date expireTime = qtzJobLockRecord.expireTime();
+            if (expireTime.compareTo(now) > 0){
+              LOG.info("Events  offset:{} the time has expired", offset);
+              return;
             }
           }
+          LOG.info("Events too offset:{} data:{}", offset, new Date());
+          lock(lockKey,DateUtils.addMinutes(now, 5));
+          alertMetrics.withTotalEvents(alertMetrics.getTotalEvents() + eventsWithReceivers.size());
+          publishEvents(eventsWithReceivers);
+          unLock(lockKey);
         } catch (Exception e) {
           LOG.error("Error in executing the Job : {} ", e.getMessage());
-          unLock(lockKey);
         }
       }
     } catch (Exception e) {
@@ -273,7 +281,7 @@ public abstract class AbstractEventConsumer
     return eventsWithReceivers;
   }
 
-  private Date selectByLockName(String lockName) {
+  private List<CollectionDAO.QtzJobLockRecord> selectByLockName(String lockName) {
     return Entity.getCollectionDAO().qtzJobLockDAO().selectByLockName(lockName);
   }
 
@@ -282,7 +290,7 @@ public abstract class AbstractEventConsumer
   }
 
   private void unLock(String lockName) {
-    Entity.getCollectionDAO().qtzJobLockDAO().deleteByLockName(lockName);
+    Entity.getCollectionDAO().qtzJobLockDAO().updateByLockName(lockName);
   }
 
 }
