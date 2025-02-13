@@ -230,6 +230,7 @@ const AddService = ({
         {activeServiceStep === 3 && (
           <ConnectionConfigForm
             cancelText={t('label.back')}
+            okText={t('label.save')}
             serviceCategory={serviceCategory}
             serviceType={selectServiceType}
             status={saveServiceState}

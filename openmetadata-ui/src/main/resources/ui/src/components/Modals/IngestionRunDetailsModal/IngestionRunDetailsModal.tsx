@@ -121,6 +121,7 @@ function IngestionRunDetailsModal({
       centered
       destroyOnClose
       open
+      cancelText={t('label.cancel')}
       closable={false}
       maskClosable={false}
       okButtonProps={{ style: { display: 'none' } }}

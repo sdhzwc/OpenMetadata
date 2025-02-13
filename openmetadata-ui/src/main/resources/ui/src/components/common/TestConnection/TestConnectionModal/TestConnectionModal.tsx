@@ -65,9 +65,11 @@ const TestConnectionModal: FC<TestConnectionModalProps> = ({
     <Modal
       centered
       bodyStyle={{ padding: '16px 0px 16px 0px' }}
+      cancelText={t('label.confirm')}
       closable={false}
       data-testid="test-connection-modal"
       maskClosable={false}
+      okText={t('label.cancel')}
       open={isOpen}
       title={t('label.connection-status')}
       width={748}
