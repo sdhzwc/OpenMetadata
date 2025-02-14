@@ -27,7 +27,7 @@ import {
 } from 'antd';
 import { useForm, useWatch } from 'antd/lib/form/Form';
 import { AxiosError } from 'axios';
-import { t } from 'i18next';
+import i18next, { t } from 'i18next';
 import { isUndefined, kebabCase } from 'lodash';
 import moment from 'moment';
 import React, { useEffect, useMemo, useState } from 'react';
@@ -54,6 +54,7 @@ import {
   getDataInsightChartForKPI,
   KPIMetricTypeOptions,
 } from '../../utils/KPI/KPIUtils';
+import { getAntdLocale } from '../../utils/Locale/LocaleUtil';
 import { showErrorToast } from '../../utils/ToastUtils';
 import './kpi-page.less';
 import { KPIFormValues } from './KPIPage.interface';
@@ -320,6 +321,7 @@ const AddKPIPage = () => {
                       data-testid="start-date"
                       disabledDate={getDisabledDates}
                       format={KPI_DATE_PICKER_FORMAT}
+                      locale={getAntdLocale(i18next.language).DatePicker}
                     />
                   </Form.Item>
                 </Col>
@@ -341,6 +343,7 @@ const AddKPIPage = () => {
                       data-testid="end-date"
                       disabledDate={getDisabledDates}
                       format={KPI_DATE_PICKER_FORMAT}
+                      locale={getAntdLocale(i18next.language).DatePicker}
                     />
                   </Form.Item>
                 </Col>

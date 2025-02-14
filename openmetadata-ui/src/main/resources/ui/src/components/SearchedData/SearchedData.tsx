@@ -11,8 +11,9 @@
  *  limitations under the License.
  */
 
-import { Pagination } from 'antd';
+import { ConfigProvider, Pagination } from 'antd';
 import classNames from 'classnames';
+import i18next from 'i18next';
 import { isNumber } from 'lodash';
 import Qs from 'qs';
 import React, { useMemo } from 'react';
@@ -21,6 +22,7 @@ import { MAX_RESULT_HITS } from '../../constants/explore.constants';
 import { ELASTICSEARCH_ERROR_PLACEHOLDER_TYPE } from '../../enums/common.enum';
 import { pluralize } from '../../utils/CommonUtils';
 import { highlightEntityNameAndDescription } from '../../utils/EntityUtils';
+import { getAntdLocale } from '../../utils/Locale/LocaleUtil';
 import ErrorPlaceHolderES from '../common/ErrorWithPlaceholder/ErrorPlaceHolderES';
 import Loader from '../common/Loader/Loader';
 import ExploreSearchCard from '../ExploreV1/ExploreSearchCard/ExploreSearchCard';
@@ -113,20 +115,22 @@ const SearchedData: React.FC<SearchedDataProps> = ({
             <>
               {children}
               <ResultCount />
-              <div data-testid="search-results">
-                {searchResultCards}
-                <Pagination
-                  hideOnSinglePage
-                  className="text-center m-b-sm"
-                  current={isNumber(Number(page)) ? Number(page) : 1}
-                  pageSize={
-                    size && isNumber(Number(size)) ? Number(size) : PAGE_SIZE
-                  }
-                  pageSizeOptions={[10, 25, 50]}
-                  total={totalValue}
-                  onChange={onPaginationChange}
-                />
-              </div>
+              <ConfigProvider locale={getAntdLocale(i18next.language)}>
+                <div data-testid="search-results">
+                  {searchResultCards}
+                  <Pagination
+                    hideOnSinglePage
+                    className="text-center m-b-sm"
+                    current={isNumber(Number(page)) ? Number(page) : 1}
+                    pageSize={
+                      size && isNumber(Number(size)) ? Number(size) : PAGE_SIZE
+                    }
+                    pageSizeOptions={[10, 25, 50]}
+                    total={totalValue}
+                    onChange={onPaginationChange}
+                  />
+                </div>
+              </ConfigProvider>
             </>
           ) : (
             <>
