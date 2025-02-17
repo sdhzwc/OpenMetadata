@@ -158,7 +158,11 @@ export const AddEditPersonaForm = ({
       confirmLoading={isSaving}
       data-testid="add-edit-persona-modal"
       okText={isEditMode ? t('label.update') : t('label.create')}
-      title={isEmpty(persona) ? 'Add Persona' : 'Edit Persona'}
+      title={
+        isEmpty(persona)
+          ? t('label.add-entity', { entity: t('label.persona') })
+          : t('label.edit-entity', { entity: t('label.persona') })
+      }
       width={750}
       onCancel={onCancel}
       onOk={handleSave}>

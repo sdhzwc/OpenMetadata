@@ -232,7 +232,7 @@ export const PersonaDetailsPage = () => {
             defaultActiveKey="users"
             items={[
               {
-                label: 'Users',
+                label: t('label.users'),
                 key: 'users',
                 children: (
                   <UsersTab
