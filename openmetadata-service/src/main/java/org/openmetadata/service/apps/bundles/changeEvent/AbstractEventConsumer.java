@@ -252,15 +252,18 @@ public abstract class AbstractEventConsumer
           alertMetrics.withTotalEvents(alertMetrics.getTotalEvents() + eventsWithReceivers.size());
           publishEvents(eventsWithReceivers);
           unLock(lockKey);
-          // Commit the Offset
-          offset += batchSize;
-          commit(jobExecutionContext);
         } catch (Exception e) {
           LOG.error("Error in executing the Job : {} ", e.getMessage());
         }
       }
     } catch (Exception e) {
       LOG.error("Error in executing the Job : {} ", e.getMessage());
+    } finally {
+      if (!eventsWithReceivers.isEmpty()) {
+        // Commit the Offset
+        offset += batchSize;
+        commit(jobExecutionContext);
+      }
     }
   }
 
