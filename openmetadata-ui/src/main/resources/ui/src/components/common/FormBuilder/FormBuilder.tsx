@@ -15,6 +15,7 @@ import { CheckOutlined } from '@ant-design/icons';
 import Form, { FormProps, IChangeEvent } from '@rjsf/core';
 import { Button } from 'antd';
 import classNames from 'classnames';
+import { t } from 'i18next';
 import { LoadingState } from 'Models';
 import React, { forwardRef, FunctionComponent, useState } from 'react';
 import { ServiceCategory } from '../../../enums/service.enum';
@@ -120,7 +121,7 @@ const FormBuilder: FunctionComponent<Props> = forwardRef(
           data-testid="buttons">
           {!hideCancelButton && (
             <Button type="link" onClick={handleCancel}>
-              {cancelText}
+              {t('label.cancel')}
             </Button>
           )}
 
@@ -145,7 +146,7 @@ const FormBuilder: FunctionComponent<Props> = forwardRef(
               htmlType="submit"
               loading={isLoading}
               type="primary">
-              {okText}
+              {t('label.save')}
             </Button>
           )}
         </div>
