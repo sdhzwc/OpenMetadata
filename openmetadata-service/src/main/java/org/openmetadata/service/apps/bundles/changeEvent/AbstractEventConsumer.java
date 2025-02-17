@@ -98,18 +98,12 @@ public abstract class AbstractEventConsumer
   }
 
   private long loadInitialOffset(JobExecutionContext context) {
-    EventSubscriptionOffset jobStoredOffset =
-        (EventSubscriptionOffset) jobDetail.getJobDataMap().get(ALERT_OFFSET_KEY);
     // If the Job Data Map has the latest offset, use it
-    if (jobStoredOffset != null) {
-      return jobStoredOffset.getOffset();
-    } else {
-      EventSubscriptionOffset eventSubscriptionOffset =
-          getStartingOffset(eventSubscription.getId());
-      // Update the Job Data Map with the latest offset
-      context.getJobDetail().getJobDataMap().put(ALERT_OFFSET_KEY, eventSubscriptionOffset);
-      return eventSubscriptionOffset.getOffset();
-    }
+    EventSubscriptionOffset eventSubscriptionOffset =
+            getStartingOffset(eventSubscription.getId());
+    // Update the Job Data Map with the latest offset
+    context.getJobDetail().getJobDataMap().put(ALERT_OFFSET_KEY, eventSubscriptionOffset);
+    return eventSubscriptionOffset.getOffset();
   }
 
   private Map<UUID, Destination<ChangeEvent>> loadDestinationsMap(JobExecutionContext context) {
@@ -229,7 +223,7 @@ public abstract class AbstractEventConsumer
     try {
       // Publish Events
       if (!eventsWithReceivers.isEmpty()) {
-        LOG.info("Events  offset:{} data:{}", offset, new Date());
+        LOG.info("Events  offset:{} data:{} eventsWithReceivers size:{}", offset, new Date(), eventsWithReceivers.size());
         alertMetrics.withTotalEvents(alertMetrics.getTotalEvents() + eventsWithReceivers.size());
         publishEvents(eventsWithReceivers);
       }
