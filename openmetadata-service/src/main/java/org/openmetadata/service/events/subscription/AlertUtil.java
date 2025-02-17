@@ -40,7 +40,9 @@ import org.openmetadata.schema.entity.events.EventSubscriptionOffset;
 import org.openmetadata.schema.entity.events.FilteringRules;
 import org.openmetadata.schema.entity.events.SubscriptionStatus;
 import org.openmetadata.schema.entity.feed.Thread;
+import org.openmetadata.schema.type.ChangeDescription;
 import org.openmetadata.schema.type.ChangeEvent;
+import org.openmetadata.schema.type.FieldChange;
 import org.openmetadata.service.Entity;
 import org.openmetadata.service.exception.CatalogExceptionMessage;
 import org.openmetadata.service.util.JsonUtils;
@@ -182,6 +184,22 @@ public final class AlertUtil {
         .filter(
             entry ->
                 checkIfChangeEventIsAllowed(entry.getKey(), eventSubscription.getFilteringRules()))
+        .filter(
+                entry -> {
+                  ChangeEvent changeEvent = entry.getKey();
+                  ChangeDescription changeDescription = changeEvent.getChangeDescription();
+                  List<FieldChange> fieldsAdded = changeDescription.getFieldsAdded();
+                  List<FieldChange> fieldsUpdated = changeDescription.getFieldsUpdated();
+                  List<FieldChange> fieldsDeleted = changeDescription.getFieldsDeleted();
+                  fieldsAdded.addAll(fieldsUpdated);
+                  fieldsAdded.addAll(fieldsDeleted);
+                  long count = fieldsAdded.stream()
+                          .filter(fieldChange -> !Entity.FIELD_TAGS.equals(fieldChange.getName()))
+                          .filter(fieldChange -> !Entity.FIELD_OWNERS.equals(fieldChange.getName()))
+                          .filter(fieldChange -> !Entity.FIELD_DOMAIN.equals(fieldChange.getName()))
+                          .count();
+                  return count > 0;
+          })
         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
 
