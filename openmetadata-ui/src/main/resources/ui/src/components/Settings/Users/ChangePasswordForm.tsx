@@ -45,6 +45,7 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({
       onClick={(e) => e.stopPropagation()}>
       <Modal
         centered
+        cancelText={t('label.cancel')}
         closable={false}
         confirmLoading={isLoading}
         data-testid="modal-container"
@@ -54,7 +55,7 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({
           type: 'primary',
           htmlType: 'submit',
         }}
-        okText={t('label.update-entity', { entity: t('label.password') })}
+        okText={t('label.save')}
         open={visible}
         title={t('label.change-entity', {
           entity: t('label.password'),
