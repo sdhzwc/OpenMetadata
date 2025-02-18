@@ -19,7 +19,7 @@ import {
 } from 'react';
 import {
   INITIAL_PAGING_VALUE,
-  PAGE_SIZE_BASE,
+  PAGE_SIZE,
   pagingObject,
 } from '../../constants/constants';
 import { Paging } from '../../generated/type/paging';
@@ -34,9 +34,7 @@ export interface UsePagingInterface {
   showPagination: boolean;
 }
 
-export const usePaging = (
-  defaultPageSize = PAGE_SIZE_BASE
-): UsePagingInterface => {
+export const usePaging = (defaultPageSize = PAGE_SIZE): UsePagingInterface => {
   const [paging, setPaging] = useState<Paging>(pagingObject);
   const [currentPage, setCurrentPage] = useState<number>(INITIAL_PAGING_VALUE);
   const [pageSize, setPageSize] = useState(defaultPageSize);
