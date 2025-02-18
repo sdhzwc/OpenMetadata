@@ -383,6 +383,7 @@ const EditKPIPage = () => {
                       data-testid="end-date"
                       disabledDate={getDisabledDates}
                       format={KPI_DATE_PICKER_FORMAT}
+                      locale={getAntdLocale(i18next.language).DatePicker}
                     />
                   </Form.Item>
                 </Col>

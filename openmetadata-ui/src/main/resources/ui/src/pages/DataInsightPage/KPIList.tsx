@@ -42,7 +42,7 @@ import { Operation } from '../../generated/entity/policies/policy';
 import { Paging } from '../../generated/type/paging';
 import { useApplicationStore } from '../../hooks/useApplicationStore';
 import { getListKPIs } from '../../rest/KpiAPI';
-import { formatDateTime } from '../../utils/date-time/DateTimeUtils';
+import { formatDate } from '../../utils/date-time/DateTimeUtils';
 import { getEntityName } from '../../utils/EntityUtils';
 import { checkPermission } from '../../utils/PermissionsUtils';
 
@@ -118,7 +118,7 @@ const KPIList = () => {
         dataIndex: 'startDate',
         key: 'startDate',
         render: (startDate: number) => (
-          <Typography.Text>{formatDateTime(startDate)}</Typography.Text>
+          <Typography.Text>{formatDate(startDate)}</Typography.Text>
         ),
       },
       {
@@ -126,7 +126,7 @@ const KPIList = () => {
         dataIndex: 'endDate',
         key: 'endDate',
         render: (endDate: number) => (
-          <Typography.Text>{formatDateTime(endDate)}</Typography.Text>
+          <Typography.Text>{formatDate(endDate)}</Typography.Text>
         ),
       },
       {
@@ -146,7 +146,9 @@ const KPIList = () => {
         dataIndex: 'metricType',
         key: 'metricType',
         render: (metricType: KpiTargetType) => (
-          <Typography.Text>{metricType}</Typography.Text>
+          <Typography.Text>
+            {t('label.' + metricType.toLowerCase())}
+          </Typography.Text>
         ),
       },
       {
