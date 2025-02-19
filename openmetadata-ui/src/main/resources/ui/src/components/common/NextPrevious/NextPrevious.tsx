@@ -100,7 +100,7 @@ const NextPrevious: FC<NextPreviousProps> = ({
       <span data-testid="page-indicator">{`${currentPage}/${computeTotalPages(
         pageSize,
         paging.total
-      )} Page`}</span>
+      )} ${t('label.page')}`}</span>
       <Button
         ghost
         className="hover-button text-sm flex-center"
@@ -115,14 +115,14 @@ const NextPrevious: FC<NextPreviousProps> = ({
         <Dropdown
           menu={{
             items: pageSizeOptions.map((size) => ({
-              label: `${size} / Page`,
+              label: `${size} ${t('label.page-plural')}`,
               value: size,
               key: size,
               onClick: () => onShowSizeChange(size),
             })),
           }}>
           <Button onClick={(e) => e.preventDefault()}>
-            {`${pageSize} / Page`}
+            {`${pageSize} ${t('label.page-plural')}`}
             <DownOutlined />
           </Button>
         </Dropdown>
