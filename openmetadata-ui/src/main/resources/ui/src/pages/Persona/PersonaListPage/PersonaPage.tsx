@@ -24,6 +24,7 @@ import { AddEditPersonaForm } from '../../../components/MyData/Persona/AddEditPe
 import { PersonaDetailsCard } from '../../../components/MyData/Persona/PersonaDetailsCard/PersonaDetailsCard';
 import PageHeader from '../../../components/PageHeader/PageHeader.component';
 import PageLayoutV1 from '../../../components/PageLayoutV1/PageLayoutV1';
+import { INITIAL_PAGING_VALUE } from '../../../constants/constants';
 import { GlobalSettingsMenuCategory } from '../../../constants/GlobalSettings.constants';
 import { PAGE_HEADERS } from '../../../constants/PageHeaders.constant';
 import { ERROR_PLACEHOLDER_TYPE } from '../../../enums/common.enum';
@@ -48,7 +49,7 @@ export const PersonaPage = () => {
     currentPage,
     handlePageChange,
     pageSize,
-    handlePageSizeChange,
+    handlePageSizeChange: hookHandlePageSizeChange,
     paging,
     handlePagingChange,
     showPagination,
@@ -63,24 +64,33 @@ export const PersonaPage = () => {
     []
   );
 
-  const fetchPersonas = useCallback(async (params?: Partial<Paging>) => {
-    try {
-      setIsLoading(true);
-      const { data, paging } = await getAllPersonas({
-        limit: pageSize,
-        fields: TabSpecificField.USERS,
-        after: params?.after,
-        before: params?.before,
-      });
+  const fetchPersonas = useCallback(
+    async (params?: Partial<Paging>) => {
+      try {
+        setIsLoading(true);
+        const { data, paging } = await getAllPersonas({
+          limit: params?.limit ?? pageSize,
+          fields: TabSpecificField.USERS,
+          after: params?.after,
+          before: params?.before,
+        });
 
-      setPersona(data);
-      handlePagingChange(paging);
-    } catch (error) {
-      // Error
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+        setPersona(data);
+        handlePagingChange(paging);
+      } catch (error) {
+        // Error
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [pageSize]
+  );
+
+  const handlePageSizeChange = (newSize: number) => {
+    hookHandlePageSizeChange(newSize);
+    handlePageChange(INITIAL_PAGING_VALUE);
+    fetchPersonas({ limit: newSize });
+  };
 
   useEffect(() => {
     fetchPersonas();
