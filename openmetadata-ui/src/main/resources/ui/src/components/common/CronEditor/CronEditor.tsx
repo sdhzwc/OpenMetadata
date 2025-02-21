@@ -17,7 +17,6 @@ import cronstrue from 'cronstrue';
 import { isEmpty } from 'lodash';
 import React, { FC, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { pluralize } from '../../../utils/CommonUtils';
 import {
   getCron,
   getQuartzCronExpression,
@@ -69,7 +68,7 @@ const CronEditor: FC<CronEditorProp> = (props) => {
   const { selectedPeriod } = state;
 
   const startText = t('label.schedule-to-run-every');
-  const cronPeriodString = `${startText} ${selectedPeriod}`;
+  const cronPeriodString = `${startText} ${t(`label.${selectedPeriod}`)}`;
 
   const changeValue = (state: StateValue) => {
     const { onChange } = props;
@@ -345,7 +344,7 @@ const CronEditor: FC<CronEditorProp> = (props) => {
                 {getBadgeOptions(
                   dayOptions,
                   selectedWeekOption.dow,
-                  1,
+                  3,
                   (value: number) => onWeekOptionSelect(value, 'dow')
                 )}
               </div>
@@ -489,10 +488,7 @@ const CronEditor: FC<CronEditorProp> = (props) => {
 
         break;
       case 'hour':
-        retString = `${cronPeriodString} ${pluralize(
-          +selectedHourOption.min,
-          'minute'
-        )} past the hour`;
+        retString = `${cronPeriodString} at ${selectedHourOption.min}`;
 
         break;
       case 'minute':

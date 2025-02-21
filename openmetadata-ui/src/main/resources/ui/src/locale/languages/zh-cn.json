@@ -1019,7 +1019,7 @@
     "save": "保存",
     "scale": "调节",
     "schedule": "任务调度",
-    "schedule-for-entity": "Scheduler for {{entity}}",
+    "schedule-for-entity": "任务调度 for {{entity}}",
     "schedule-info": "任务调度信息",
     "schedule-interval": "任务调度时间间隔",
     "schedule-to-run-every": "运行时间被设置为每",
