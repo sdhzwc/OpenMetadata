@@ -191,16 +191,24 @@ public final class AlertUtil {
                   List<FieldChange> fieldsAdded = changeDescription.getFieldsAdded();
                   List<FieldChange> fieldsUpdated = changeDescription.getFieldsUpdated();
                   List<FieldChange> fieldsDeleted = changeDescription.getFieldsDeleted();
-                  fieldsAdded.addAll(fieldsUpdated);
-                  fieldsAdded.addAll(fieldsDeleted);
-                  long count = fieldsAdded.stream()
-                          .filter(fieldChange -> !Entity.FIELD_TAGS.equals(fieldChange.getName()))
-                          .filter(fieldChange -> !Entity.FIELD_OWNERS.equals(fieldChange.getName()))
-                          .filter(fieldChange -> !Entity.FIELD_DOMAIN.equals(fieldChange.getName()))
+                  long addCount = fieldsAdded.stream()
+                          .filter(fieldChange -> isRelevantField(fieldChange.getName()))
                           .count();
-                  return count > 0;
+                  long updateCount = fieldsUpdated.stream()
+                          .filter(fieldChange -> isRelevantField(fieldChange.getName()))
+                          .count();
+                  long deleteCount = fieldsDeleted.stream()
+                          .filter(fieldChange -> isRelevantField(fieldChange.getName()))
+                          .count();
+                  return addCount == 0 && updateCount == 0 && deleteCount == 0;
           })
         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+  }
+
+  private static boolean isRelevantField(String fieldName) {
+    return Entity.FIELD_TAGS.equals(fieldName) ||
+            Entity.FIELD_OWNERS.equals(fieldName) ||
+            Entity.FIELD_DOMAIN.equals(fieldName);
   }
 
   private static boolean checkIfChangeEventIsAllowed(
