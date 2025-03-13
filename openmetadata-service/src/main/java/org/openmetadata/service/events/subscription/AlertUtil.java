@@ -187,20 +187,25 @@ public final class AlertUtil {
         .filter(
                 entry -> {
                   ChangeEvent changeEvent = entry.getKey();
-                  ChangeDescription changeDescription = changeEvent.getChangeDescription();
-                  List<FieldChange> fieldsAdded = changeDescription.getFieldsAdded();
-                  List<FieldChange> fieldsUpdated = changeDescription.getFieldsUpdated();
-                  List<FieldChange> fieldsDeleted = changeDescription.getFieldsDeleted();
-                  long addCount = fieldsAdded.stream()
-                          .filter(fieldChange -> isRelevantField(fieldChange.getName()))
-                          .count();
-                  long updateCount = fieldsUpdated.stream()
-                          .filter(fieldChange -> isRelevantField(fieldChange.getName()))
-                          .count();
-                  long deleteCount = fieldsDeleted.stream()
-                          .filter(fieldChange -> isRelevantField(fieldChange.getName()))
-                          .count();
-                  return addCount == 0 && updateCount == 0 && deleteCount == 0;
+                  String entityType = changeEvent.getEntityType();
+                  if (Entity.TABLE.equals(entityType)) {
+                    ChangeDescription changeDescription = changeEvent.getChangeDescription();
+                    List<FieldChange> fieldsAdded = changeDescription.getFieldsAdded();
+                    List<FieldChange> fieldsUpdated = changeDescription.getFieldsUpdated();
+                    List<FieldChange> fieldsDeleted = changeDescription.getFieldsDeleted();
+                    long addCount = fieldsAdded.stream()
+                            .filter(fieldChange -> isRelevantField(fieldChange.getName()))
+                            .count();
+                    long updateCount = fieldsUpdated.stream()
+                            .filter(fieldChange -> isRelevantField(fieldChange.getName()))
+                            .count();
+                    long deleteCount = fieldsDeleted.stream()
+                            .filter(fieldChange -> isRelevantField(fieldChange.getName()))
+                            .count();
+                    return addCount == 0 && updateCount == 0 && deleteCount == 0;
+                  } else {
+                    return true;
+                  }
           })
         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
