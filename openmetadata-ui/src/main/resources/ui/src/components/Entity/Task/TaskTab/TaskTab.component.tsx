@@ -1019,9 +1019,11 @@ export const TaskTab = ({
       ) : (
         <Modal
           destroyOnClose
+          cancelText={t('label.cancel')}
           closable={false}
           closeIcon={null}
           maskClosable={false}
+          okText={t('label.confirm')}
           open={showEditTaskModel}
           title={`${t('label.edit-entity', {
             entity: t('label.task-lowercase'),
